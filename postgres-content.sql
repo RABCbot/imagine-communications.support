@@ -16,7 +16,7 @@ select data->>'houseId' from public.content where data->'customAttributes' = '{}
 -- danger zone use with caution: update json data directly
 update public.content set data = data - 'isRegistrationWorkflowCompleted' - 'motionWorkflows' || '{"isRegistrationWorkflowCompleted": true}' where data->>'houseId' = 'your-id'
 
--- danger zone null update date
+-- danger zone: set expiredon date to null
 update public.content set data = data || '{"expiredOn":null}'
 
 
