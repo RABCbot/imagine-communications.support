@@ -1,4 +1,4 @@
 ### list all workflows
 ```
-curl -H "Content-Type: application/json" -X GET https://localhost:9005/workflows
+curl -X GET https://<motion-ip>:9005/workflows -H "Content-Type: application/json" 
 ```
