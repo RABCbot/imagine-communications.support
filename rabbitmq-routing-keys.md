@@ -1,6 +1,6 @@
 ### RabbitMQ routing key samples
-Routing keys you can suscribe to listen to specific messages
-Tips:
+Routing keys you can suscribe to listen to specific messages\
+Tips:\
 \* (star) can substitute for exactly one word
 \# (hash) can substitute for zero or more words
 
