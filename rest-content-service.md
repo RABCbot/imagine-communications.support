@@ -2,7 +2,7 @@
 
 Get a record by house id
 ```
-curl https://<content-service-ip>/contentservice/api/contents?houseID=<your-id?
+curl https://<content-service-ip>/contentservice/api/contents?houseID=<your-id>
 ```
 
 Search for records using filter with house id
