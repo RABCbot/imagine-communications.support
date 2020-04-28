@@ -1,13 +1,10 @@
---record count per endpoint alias
-LEFT JOIN hx_mediabase.Metadata as m
-ON f.Id = m.FileId
-LEFT JOIN hx_mediabase.Directories as d
-ON f.DirectoryId = d.Id
-LEFT JOIN hx_resource.PublishedEndpoint as e
-ON d.EndpointId = e._id
-WHERE e.Alias Like 'Nexio-MBS%'
-AND f.IsDeleted = 0
-GROUP BY e.Alias
+--select files from an endpoint
+select f.Name, f.CreatedOn, f.IsClosed from hx_mediabase.Files as f
+join hx_mediabase.Metadata as m on f.Id = m.FileId
+join hx_mediabase.Directories as d on f.DirectoryId = d.Id
+join hx_resource.PublishedEndpoint as e on d.EndpointId = e._id
+where e.Alias = 'Nexio-MBS-LI'
+and f.IsDeleted = 0
 
 -- action in endpoint
 select Alias, JobId, Created, [State], Message 
