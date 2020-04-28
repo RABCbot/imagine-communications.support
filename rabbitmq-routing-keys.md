@@ -1,5 +1,5 @@
 ### RabbitMQ routing key samples
-Routing keys you can suscribe to liste to messages
+Routing keys you can suscribe to listen to specific messages
 
 All Schedule Execution Services (SES) ping 
 ```
