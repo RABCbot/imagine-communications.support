@@ -9,4 +9,15 @@ One specific Schedule Execution Service ping
 ```
 EVENT.ExecutionService.<uuid>.Ping
 ```
-
+Get channel requests
+```
+*.REQUEST.ExecutionService.Channels
+```
+Bind to Automation 
+```
+*.REQUEST.ExecutionService.*.Commands.AppendScheduleWithId
+```
+SES to SS
+```
+*.REQUEST.ScheduleService.Schedule.#
+```
