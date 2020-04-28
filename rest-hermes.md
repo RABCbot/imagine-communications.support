@@ -1,4 +1,5 @@
 ### Hermes sample rest commands
+Commands are shown using curl, but can be easily ran using Fiddler or even a browser
 
 Get version (useful to confirm is running)
 ```
