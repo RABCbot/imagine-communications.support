@@ -1,5 +1,4 @@
-### query an asrun channel guid by date
-
+-- query an asrun channel guid by date
 select data->'Start'->'Date' as StartDate,
 data->'Start'->'Timecode' as StartTime,
 data->'PrimaryContent'->'HouseId' as houseId,
