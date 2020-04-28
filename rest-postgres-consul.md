@@ -1,4 +1,4 @@
-### Postgres Consul sample REST command
+### Postgres Consul sample REST commands
 Commands are shown using curl, but can be easily ran using Fiddler or even a browser
 
 Get configuration
