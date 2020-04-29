@@ -10,6 +10,9 @@ select count(data) from public.content where data->>'endpoints' like '%062ae5af-
 -- count records on each endpoint
 select jsonb_object_keys(data->'endpoints'), count(data) from content group by jsonb_object_keys(data->'endpoints')
 
+-- count records belonging to one or more endpoints
+select array_length(array(select jsonb_object_keys(data->'endpoints')), 1), count(1) from content group by array_length(array(select jsonb_object_keys(data->'endpoints')), 1)
+
 -- list all records in a specific endpoint
 select data->>'houseId', data->>'createdOn', data->'registrationStatus' from public.content where data->>'endpoints' like '%062ae5af-63c9-4052-b469-84f1f6d94c94%'
 
