@@ -12,6 +12,7 @@ join hx_mediabase.Metadata as m on f.Id = m.FileId
 join hx_mediabase.Directories as d on f.DirectoryId = d.Id
 join hx_resource.PublishedEndpoint as e on d.EndpointId = e._id
 where e.Alias like 'Nexio-MBS-%'
+and f.IsDeleted = 0
 group by e.Alias
 
 -- action in endpoint
