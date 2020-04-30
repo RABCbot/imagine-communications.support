@@ -15,6 +15,21 @@ where e.Alias like 'Nexio-MBS-%'
 and f.IsDeleted = 0
 group by e.Alias
 
+-- compare files on two endpoints (all files in B not in A)
+SELECT F.Name as copyBtoA
+  FROM [Motion].[hx_resource].[PublishedEndpoint] PE 
+  INNER JOIN [Motion].[hx_mediabase].[Directories] D ON PE._id=D.EndpointId
+  INNER JOIN [Motion].[hx_mediabase].[Files] F ON D.Id=F.DirectoryId
+  WHERE PE.[Alias]='SystemB' and PE.IsDeleted='0' and F.name
+  not in 
+  (  
+  SELECT F.Name 
+  FROM [Motion].[hx_resource].[PublishedEndpoint] PE 
+  INNER JOIN [Motion].[hx_mediabase].[Directories] D ON PE._id=D.EndpointId
+  INNER JOIN [Motion].[hx_mediabase].[Files] F ON D.Id=F.DirectoryId
+  WHERE PE.[Alias]='SystemA' and and PE.IsDeleted='0'
+  )
+
 -- action in endpoint
 select Alias, JobId, Created, [State], Message 
 from hx_resource.Action as a
