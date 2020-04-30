@@ -51,6 +51,11 @@ left outer join hx_mediabase.Directories as d on f.DirectoryId = d.Id
 left outer join hx_resource.PublishedEndpoint as pe on pe._id = d.EndpointId
 where f.Name = XXXXX
 
+-- JSON metadata
+select FileId as id ,[Metadata] , JSON_VALUE(Metadata,'$.format.duration_in_ms') as duration 
+from [Motion4].[hx_mediabase].[Metadata]
+where FileId = 'your-id';
+
 -- heavy use
 select 
 D.Name as "device Name",
@@ -101,6 +106,31 @@ from hx_workflow.VersionInfo
 left outer join hx_workflow.WorkflowInfo on hx_workflow.WorkflowInfo.PublishedVersionInfoId = hx_workflow.VersionInfo._id 
 where hx_workflow.VersionInfo._id = sw.VersionInfoId) as subName
 from hx_workflow.WorkflowSubWorkflowRelation as sw
+
+-- File duration versus metadata duration
+WITH files AS (
+       SELECT FileId=f.[Id] , FileName=f.[Name], Endpoint=pe.[Alias], Duration=JSON_VALUE(Metadata,'$.format.duration_in_ms')
+       FROM [hx_mediabase].[Files] f
+       Inner Join [hx_mediabase].[Metadata] m ON f.[Id] = m.[FileId]
+       Inner Join [hx_mediabase].[Directories] d ON f.[DirectoryId] = d.[Id]
+       Inner Join [hx_resource].[PublishedEndpoint] pe ON d.[EndpointId] = pe.[_id]
+          WHERE f.IsDeleted = 0
+),
+diff AS (
+       SELECT Filename
+       FROM (
+             SELECT Filename, Duration
+             FROM files
+                    WHERE Duration IS NOT NULL
+             GROUP by FileName, Duration
+       ) t
+       GROUP by Filename
+       HAVING COUNT(*) > 1
+)
+SELECT * 
+FROM files
+WHERE FileName in (SELECT FileName FROM Diff)
+ORDER BY FileName, Duration
 
 
 
