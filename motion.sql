@@ -132,5 +132,6 @@ FROM files
 WHERE FileName in (SELECT FileName FROM Diff)
 ORDER BY FileName, Duration
 
-
+-- pending metadata
+Select Count(*) from hx_mediabase.FileChangeLogsToProcess where MetadataExtDone = 0
 
