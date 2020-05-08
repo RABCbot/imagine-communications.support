@@ -35,5 +35,8 @@ update public.content set data = data - 'isRegistrationWorkflowCompleted' - 'mot
 
 -- danger zone: set expiredon date to null
 update public.content set data = data || '{"expiredOn":null}'
+                                                                                                                              
+-- remove a nested jsonb
+update public.content set data = data #- '{customAttributes, 7167fc550af14b338247291eea7c471f}' where data->>'houseId' = '<your-id>'
 
 
