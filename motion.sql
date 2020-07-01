@@ -1,3 +1,12 @@
+-- Workflow Instance info - Show DebugInformation comments
+select wih.Id, wi.Name, wii.MediaId,  wih.Host, wih.Created, wih.Status, wii.Created, wii.Modified, wii.ErrorMessage, wih.Comment
+from hx_workflow.WorkflowInstanceHistoryInfo as wih
+left outer join hx_workflow.WorkflowInstanceInfo as wii on wih.WorkflowInstanceInfoId = wii._id
+left outer join hx_workflow.VersionInfo as vi on vi._id = wii.VersionInfoId
+left outer join hx_workflow.WorkflowInfo as wi on wi._id = vi.WorkflowInfoId
+where wih.Status = 'DebugInformation'
+order by wii.Created desc
+
 --select files from an endpoint
 select f.Name, f.CreatedOn, f.IsClosed from hx_mediabase.Files as f
 join hx_mediabase.Metadata as m on f.Id = m.FileId
