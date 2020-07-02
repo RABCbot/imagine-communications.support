@@ -1,4 +1,4 @@
-### RabbitMQ routing execution service key examples
+### RabbitMQ execution service routing key examples
 Routing keys you can subscribe to listen to specific messages\
 Tips:\
 \* (star) can substitute for exactly one word\
