@@ -1,5 +1,5 @@
-### RabbitMQ Motion routing key samples
-Routing keys you can suscribe to listen to specific messages\
+### RabbitMQ Motion routing key examples
+Routing keys you can subscribe to listen to specific messages\
 Tips:\
 \* (star) can substitute for exactly one word\
 \# (hash) can substitute for zero or more words
