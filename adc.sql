@@ -36,6 +36,13 @@ Format((Duration & 0x0000FF00)/0x0000FF, 'X2') + ';' +
 Format((Duration & 0x000000FF)/0x000001, 'X2'),
 ASDB.dbo.ASSEG
 
+-- find NDF records
+select Type, Identifier, Title,
+Format(Duration, 'X8')
+from ASDB2..ASDB
+where Duration & 0xF0000 > 0x10000
+and (Duration & 0xFFFF = 0 or Duration & 0xFFFF = 1)
+
 -- insert a record with SOM 01:02:03:04 and DUR 00:00:30:00
 insert [ASDB].[dbo].[ASDB] (Type, Identifier, StartOfMessage, Duration)
 values ('s', 'your-id', 0x01020304, 0x00003000); 
