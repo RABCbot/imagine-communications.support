@@ -1,6 +1,26 @@
 -- show individual record by house id
 select data from public.content where data->>'houseId' = 'your-id'
 
+-- show videoStream timecode values pretty printed
+SELECT data->>'houseId' as houseid, data->>'title' as title,
+to_char((data->'videoStream'->'start'->>'totalMilliseconds')::bigint / 3600000,'00') || ':' ||
+to_char(((data->'videoStream'->'start'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'start'->>'totalMilliseconds')::bigint / 3600000) * 3600000)) / 60000,'00') || ':' ||
+to_char(((data->'videoStream'->'start'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'start'->>'totalMilliseconds')::bigint / 60000) * 60000)) / 1000,'00') || ';' ||
+to_char((((data->'videoStream'->'start'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'start'->>'totalMilliseconds')::bigint / 1000) * 1000)) * 1.001 / 30)::bigint,'00') as start,
+to_char((data->'videoStream'->'customStart'->>'totalMilliseconds')::bigint / 3600000,'00') || ':' ||
+to_char(((data->'videoStream'->'customStart'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'customStart'->>'totalMilliseconds')::bigint / 3600000) * 3600000)) / 60000,'00') || ':' ||
+to_char(((data->'videoStream'->'customStart'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'customStart'->>'totalMilliseconds')::bigint / 60000) * 60000)) / 1000,'00') || ';' ||
+to_char((((data->'videoStream'->'customStart'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'customStart'->>'totalMilliseconds')::bigint / 1000) * 1000)) * 1.001 / 30)::bigint,'00') as customStart,
+to_char((data->'videoStream'->'duration'->>'totalMilliseconds')::bigint / 3600000,'00') || ':' ||
+to_char(((data->'videoStream'->'duration'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'duration'->>'totalMilliseconds')::bigint / 3600000) * 3600000)) / 60000,'00') || ':' ||
+to_char(((data->'videoStream'->'duration'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'duration'->>'totalMilliseconds')::bigint / 60000) * 60000)) / 1000,'00') || ';' ||
+to_char((((data->'videoStream'->'duration'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'duration'->>'totalMilliseconds')::bigint / 1000) * 1000)) * 1.001 / 30)::bigint,'00') as duration,
+to_char((data->'videoStream'->'duration'->>'totalMilliseconds')::bigint / 3600000,'00') || ':' ||
+to_char(((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint / 3600000) * 3600000)) / 60000,'00') || ':' ||
+to_char(((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint / 60000) * 60000)) / 1000,'00') || ';' ||
+to_char((((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint / 1000) * 1000)) * 1.001 / 30)::bigint,'00') as customduration
+FROM public.content
+
 -- number of records per registration status
 select data->'registrationStatus', count(data) from public.content group by data->'registrationStatus'
 
