@@ -19,6 +19,7 @@ to_char((data->'videoStream'->'duration'->>'totalMilliseconds')::bigint / 360000
 to_char(((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint / 3600000) * 3600000)) / 60000,'00') || ':' ||
 to_char(((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint / 60000) * 60000)) / 1000,'00') || ';' ||
 to_char((((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint - (((data->'videoStream'->'customDuration'->>'totalMilliseconds')::bigint / 1000) * 1000)) * 1.001 / 30)::bigint,'00') as customduration
+,jsonb_array_length(data->'videoStream'->'segments') as segments
 FROM public.content
 
 -- number of records per registration status
