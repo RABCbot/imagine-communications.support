@@ -1,21 +1,14 @@
--- Workflow instance info show failed workflows
-select wii.MediaId, wii.ErrorMessage
+-- select debug information history
+select wii.MediaId, wih.Comment
 from hx_workflow.WorkflowInstanceHistoryInfo as wih
 left outer join hx_workflow.WorkflowInstanceInfo as wii on wih.WorkflowInstanceInfoId = wii._id
 left outer join hx_workflow.VersionInfo as vi on vi._id = wii.VersionInfoId
 left outer join hx_workflow.WorkflowInfo as wi on wi._id = vi.WorkflowInfoId
-where wih.Status = 'Failed' 
-and Name = 'Your-workflow-name'
-and wih.Created like '2020-08-20%'
-
--- Workflow Instance info - Show DebugInformation comments
-select wih.Id, wi.Name, wii.MediaId,  wih.Host, wih.Created, wih.Status, wii.Created, wii.Modified, wii.ErrorMessage, wih.Comment
-from hx_workflow.WorkflowInstanceHistoryInfo as wih
-left outer join hx_workflow.WorkflowInstanceInfo as wii on wih.WorkflowInstanceInfoId = wii._id
-left outer join hx_workflow.VersionInfo as vi on vi._id = wii.VersionInfoId
-left outer join hx_workflow.WorkflowInfo as wi on wi._id = vi.WorkflowInfoId
-where wih.Status = 'DebugInformation'
-order by wii.Created desc
+where 
+Name like 'your-workflow-name%'
+and wih.Status = 'DebugInformation'
+and wih.Created like '2020-08-21%'
+order by MediaId, Comment
 
 --select files from an endpoint
 select f.Name, f.CreatedOn, f.IsClosed from hx_mediabase.Files as f
