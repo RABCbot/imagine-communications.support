@@ -36,6 +36,27 @@ Format((Duration & 0x0000FF00)/0x0000FF, 'X2') + ';' +
 Format((Duration & 0x000000FF)/0x000001, 'X2'),
 ASDB.dbo.ASSEG
 
+-- Asrun service from the AdcDatabase
+SELECT ServerName, Identifier, Title, ReconcileKey, 
+OnAirDate, EventType, Status, SegmentNumber, Device,
+Format((OnAirTime & 0xFF000000)/0xFF0000, 'X2') + ':' +
+Format((OnAirTime & 0x00FF0000)/0x00FF00, 'X2') + ':' +
+Format((OnAirTime & 0x0000FF00)/0x0000FF, 'X2') + ';' +
+Format((OnAirTime & 0x000000FF)/0x000001, 'X2') As Time,
+Format((ActualDuration & 0xFF000000)/0xFF0000, 'X2') + ':' +
+Format((ActualDuration & 0x00FF0000)/0x00FF00, 'X2') + ':' +
+Format((ActualDuration & 0x0000FF00)/0x0000FF, 'X2') + ';' +
+Format((ActualDuration & 0x000000FF)/0x000001, 'X2') As DUR,
+Format((StartOfMedia & 0xFF000000)/0xFF0000, 'X2') + ':' +
+Format((StartOfMedia & 0x00FF0000)/0x00FF00, 'X2') + ':' +
+Format((StartOfMedia & 0x0000FF00)/0x0000FF, 'X2') + ';' +
+Format((StartOfMedia & 0x000000FF)/0x000001, 'X2') As SOM
+FROM [AdcDatabase].[dbo].[AsRuns]
+Where ServerName Like 'AMC_DS1%'
+And ListNumber = 1
+And OnAirDate >= '2020-08-29'
+Order by OnAirTime
+
 -- find NDF records
 select Type, Identifier, Title,
 Format(Duration, 'X8')
