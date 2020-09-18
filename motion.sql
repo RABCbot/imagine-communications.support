@@ -1,3 +1,13 @@
+-- abort evething that is not FTP transfers or transcode, etc
+update Motion4.hx_workflow.WorkflowInstanceInfo
+set WaitingForStatus = 'WaitingForTerminateByOperator'
+where Id not in (
+select wii.Id, wii.Status, wii.WaitingForStatus
+from Motion4.hx_workflow.WorkflowInstanceInfo wii
+left join hx_workflow.VersionInfo vi on vi._id = VersionInfoId
+where vi.WorkflowInfoId = 557 and WaitingForStatus is NULL and Status = 'Running'
+)
+
 -- select debug information history
 select wii.MediaId, wih.Comment
 from hx_workflow.WorkflowInstanceHistoryInfo as wih
