@@ -1,11 +1,11 @@
--- abort evething that is not FTP transfers or transcode, etc
+-- abort jobs, important: correct select subquery to your needs
 update Motion4.hx_workflow.WorkflowInstanceInfo
 set WaitingForStatus = 'WaitingForTerminateByOperator'
 where Id not in (
-select wii.Id, wii.Status, wii.WaitingForStatus
+select wii.Id
 from Motion4.hx_workflow.WorkflowInstanceInfo wii
 left join hx_workflow.VersionInfo vi on vi._id = VersionInfoId
-where vi.WorkflowInfoId = 557 and WaitingForStatus is NULL and Status = 'Running'
+where vi.WorkflowInfoId = 86 and WaitingForStatus is NULL
 )
 
 -- select debug information history
